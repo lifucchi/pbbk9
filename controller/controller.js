@@ -57,11 +57,11 @@ exports.getUsers= (req,res)=>{
                         for (var i = 0, len = rows.length; i < len; i++) {  //query den gelen bütün parametreleri rows sınıfına ekliyoruz .
                             row[i] = rows[i];
                             // console.log(row[i]);                        
-                            res.send(rows);
+                            // res.send(rows);
                         }  
                     }
                 }
-                    connection.query('select * from users ', function (err, rows2) {
+                    connection.query('select * from users ', function (err, rows) {
                     if (err) {
                         console.log(err);
                     } else {
@@ -71,7 +71,7 @@ exports.getUsers= (req,res)=>{
                         //         // console.log(row[i]);                        
                         //     }  
                         // }
-                        res.send(rows2);
+                        res.send(rows);
                     }                
                  // res.render('signup',{
                  //    message: req.flash('signupMessage'),
