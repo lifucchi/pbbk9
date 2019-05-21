@@ -9,7 +9,8 @@ var bcrypt = require('bcrypt-nodejs');
 // app.use('/', router);
 
 exports.index= (req,res)=>{
-        res.render('welcome.tl',{ message: req.flash('loginMessage') });
+        // res.render('welcome.tl',{ message: req.flash('loginMessage') });
+        res.send("Ini halaman utama");
 };
 
 exports.loginPage= (req,res)=>{
@@ -29,10 +30,12 @@ exports.loginPage= (req,res)=>{
                     }  
                 }
                 console.log(row);
+                res.send(rows);
             }
-            res.render('index', {
-                    rows: row
-                });
+            // res.render('index', {
+            //         rows: row
+            //     });
+
             // res.json(req.user.ID); 
             // res.render('index.tl', {rows : row});
             // req.send(req.params); 

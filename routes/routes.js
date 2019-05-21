@@ -13,15 +13,16 @@ app.use(express.static("public"));
 module.exports = function(app,passport) {
 		
 	app.get('/' ,controller.index);
+	// sudah
 	app.get('/login/:id' ,controller.loginPage);
 // user
-	//add user
+
+	//add user sudah
 	app.post('/users', passport.authenticate('local-signup', {
-            session : false
-            // ,
-            // successRedirect: '/',
-            // failureRedirect: '/users',
-            // failureFlash : true 
+            session : false,
+            successRedirect: '/users',
+            failureRedirect: '/users',
+            failureFlash : true 
     }));
 	// get user sudah
 	app.get('/users', controller.getUsers);
@@ -37,7 +38,7 @@ module.exports = function(app,passport) {
  //            failureRedirect: '/login',
  //            failureFlash : true 
 	// }));
-	// belum
+	// sudah
 	app.post('/login', function(req, res, next){
 		var id =  req.body.id;
 		passport.authenticate('local-login', {
