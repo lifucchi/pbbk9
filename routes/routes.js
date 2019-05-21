@@ -17,17 +17,18 @@ module.exports = function(app,passport) {
 // user
 	//add user
 	app.post('/users', passport.authenticate('local-signup', {
-            session : false,
-            successRedirect: '/',
-            failureRedirect: '/users',
-            failureFlash : true 
+            session : false
+            // ,
+            // successRedirect: '/',
+            // failureRedirect: '/users',
+            // failureFlash : true 
     }));
-	// get user
+	// get user sudah
 	app.get('/users', controller.getUsers);
 	
-	//Get info user
+	//Get info user sudah
 	app.get('/users/:id', controller.getIdUser);
-	// Delete user
+	// Delete user sudah
 	app.delete('/users/:id', controller.getDelUser);
 // auth-login
 
@@ -36,6 +37,7 @@ module.exports = function(app,passport) {
  //            failureRedirect: '/login',
  //            failureFlash : true 
 	// }));
+	// belum
 	app.post('/login', function(req, res, next){
 		var id =  req.body.id;
 		passport.authenticate('local-login', {
@@ -45,16 +47,18 @@ module.exports = function(app,passport) {
             failureFlash : true 
 		})(req, res, next);
 	});
-	
+
+	// belum	
 	app.get('/login', controller.getLogin);	
 	// app.get('/logout', controller.getLogout);		
-// Gate
+
+// Gate sudah
 	app.post('/gates', controller.addGates);
 	app.get('/gates', controller.getGates);
 	app.get('/gates/:g_id', controller.getIdGate);
 	app.delete('/gates/:g_id', controller.getDelGate);
 
-	app.get('/logout', controller.getLogout);
+	// app.get('/logout', controller.getLogout);
 
 
 	app.post('/hakakses', controller.addHakAkses);

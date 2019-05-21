@@ -61,22 +61,20 @@ exports.getUsers= (req,res)=>{
                     if (err) {
                         console.log(err);
                     } else {
-                        if (rows.length) {
-                            for (var i = 0, len = rows.length; i < len; i++) {  //query den gelen bütün parametreleri rows sınıfına ekliyoruz .
-                                row2[i] = rows[i];
-                                // console.log(row[i]);                        
-                            }  
-                        }
-                    }
-                
-                 res.render('signup',{
-                    message: req.flash('signupMessage'),
-                    rows: row,
-                    rows2 : row2
-                 });
+                        // if (rows.length) {
+                        //     for (var i = 0, len = rows.length; i < len; i++) {  //query den gelen bütün parametreleri rows sınıfına ekliyoruz .
+                        //         row2[i] = rows[i];
+                        //         // console.log(row[i]);                        
+                        //     }  
+                        // }
+                        res.send(rows);
+                    }                
+                 // res.render('signup',{
+                 //    message: req.flash('signupMessage'),
+                 //    rows: row,
+                 //    rows2 : row2
+                 // });
                 });
-
-                
             });
 
         // }
@@ -89,13 +87,13 @@ exports.postUsers= (req,res)=>{
 };
 
 exports.postLogin= (req,res)=>{
-	 console.log("hello");
-            if (req.body.remember) {
-              req.session.cookie.maxAge = 1000 * 60 * 3;
-            } else {
-              req.session.cookie.expires = false;
-            }
-        res.redirect('/');
+	 // console.log("hello");
+  //           if (req.body.remember) {
+  //             req.session.cookie.maxAge = 1000 * 60 * 3;
+  //           } else {
+  //             req.session.cookie.expires = false;
+  //           }
+  //       res.redirect('/');
 };
 
 exports.getLogin= (req,res)=>{
@@ -113,10 +111,11 @@ exports.getLogin= (req,res)=>{
                     }  
                 }
             }
-             res.render('login.tl',{
-                message: req.flash('loginMessage'),
-                rows: row
-             });
+             // res.render('login.tl',{
+             //    message: req.flash('loginMessage'),
+             //    rows: row
+             // });
+             res.send(req.flash('loginMessage'));
         });
 
 };
@@ -140,36 +139,44 @@ exports.addGates= (req, res) => {
                 G_GATENAME + "', '" + G_OPEN + "', '" + G_CLOSE + "')";
             connection.query(query, (err, result) => {
                 if (err) {
-                    return res.status(500).send(err);
+                    // res.send("Berhasil");
+                    res.status(500).send(err);
+                }else{
+                    res.send("Berhasil");
                 }
-                res.redirect('/gates');
+                // res.redirect('/gates');
             });
         }
     });
 };
 
 exports.getGates= (req,res)=>{
-        // res.render('gates',{
-        //     message: req.flash('message')
-        //  });
         var row = [];
             connection.query('select * from gate ', function (err, rows) {
             if (err) {
                 console.log(err);
             } else {
-                if (rows.length) {
-                    for (var i = 0, len = rows.length; i < len; i++) {  //query den gelen bütün parametreleri rows sınıfına ekliyoruz .
-                        row[i] = rows[i];
-                        // console.log(row[i]);                        
-                    }  
-                }
+                res.send(rows);
             }
+        });     
+        // var row = [];
+        //     connection.query('select * from gate ', function (err, rows) {
+        //     if (err) {
+        //         console.log(err);
+        //     } else {
+        //         if (rows.length) {
+        //             for (var i = 0, len = rows.length; i < len; i++) {  //query den gelen bütün parametreleri rows sınıfına ekliyoruz .
+        //                 row[i] = rows[i];
+        //                 // console.log(row[i]);                        
+        //             }  
+        //         }
+        //     }
         
-         res.render('gates.tl',{
-            message: req.flash('signupMessage'),
-            rows: row
-         });
-        });        
+        //  res.render('gates.tl',{
+        //     message: req.flash('signupMessage'),
+        //     rows: row
+        //  });
+        // });        
 };
 
 exports.getIdUser= (req,res)=>{
@@ -187,17 +194,18 @@ exports.getIdUser= (req,res)=>{
             if (err) {
                 console.log(err);
             } else {
-                if (rows.length) {
-                    for (var i = 0, len = rows.length; i < len; i++) {  //query den gelen bütün parametreleri rows sınıfına ekliyoruz .
-                        row[i] = rows[i];
+                // if (rows.length) {
+                //     for (var i = 0, len = rows.length; i < len; i++) {  //query den gelen bütün parametreleri rows sınıfına ekliyoruz .
+                //         row[i] = rows[i];
                         
-                    }  
-                }
-                console.log(row);
+                //     }  
+                // }
+                // console.log(row);
+            res.send(rows);
             }
-            res.render('profile', {
-                    rows: row
-                });
+            // res.render('profile', {
+            //         rows: row
+            //     });
             // res.json(req.user.ID); 
             // res.render('index.tl', {rows : row});
             // req.send(req.params); 
@@ -208,8 +216,8 @@ exports.getIdUser= (req,res)=>{
 };
 
     exports.getLogout= (req,res)=>{
-            req.logout();
-            res.redirect('/');
+            // req.logout();
+            // res.redirect('/');
     };
 
     exports.getDelUser = (req,res)=>{
@@ -225,7 +233,8 @@ exports.getIdUser= (req,res)=>{
                 console.log(err);
             } else {
                     console.log("harusnya ke user");
-                     res.redirect('/users');
+                     // res.redirect('/users');
+                    res.send(rows);
             }
         });
     };
@@ -238,24 +247,26 @@ exports.getIdUser= (req,res)=>{
       // console.log(id);
        var row = [];
         var row2=[];
-        var id = req.params.g_id;
-          console.log("TES");
-          console.log(id);
-        connection.query('select * from gate where g_id = ?',[id], function (err, rows) {
+        var g_id = req.params.g_id;
+          //console.log("TES");
+          //console.log(id);
+        connection.query('select * from gate where g_id = ?',[g_id], function (err, rows) {
             if (err) {
                 console.log(err);
             } else {
-                if (rows.length) {
-                    for (var i = 0, len = rows.length; i < len; i++) {  //query den gelen bütün parametreleri rows sınıfına ekliyoruz .
-                        row[i] = rows[i];
+                // if (rows.length) {
+                //     for (var i = 0, len = rows.length; i < len; i++) {  //query den gelen bütün parametreleri rows sınıfına ekliyoruz .
+                //         row[i] = rows[i];
                         
-                    }  
-                }
-                console.log(row);
+                //     }  
+                // }
+                // console.log(row);
+                res.send(rows);
+
             }
-            res.render('gate', {
-                    rows: row
-                });
+            // res.render('gate', {
+            //         rows: row
+            //     });
             // res.json(req.user.ID); 
             // res.render('index.tl', {rows : row});
             // req.send(req.params); 
@@ -281,7 +292,8 @@ exports.getIdUser= (req,res)=>{
                                 console.log(err);
                             } else {
                                     console.log("harusnya ke user");
-                                     res.redirect('/gates');
+                                    res.send(rows);                                    
+                                     // res.redirect('/gates');
                             }
                         });
   
@@ -291,14 +303,15 @@ exports.getIdUser= (req,res)=>{
                             if (err) {
                                 console.log(err);
                             } else {
-                            connection.query('delete from gate where g_id = ?',[id], function (err, rows) {
-                            console.log("MASUK query delete");            
-                            if (err) {
-                                console.log(err);
-                            } else {
-                                   console.log("harusnya ke user");
-                                     res.redirect('/gates');       
-                            }
+                                connection.query('delete from gate where g_id = ?',[id], function (err, rows) {
+                                console.log("MASUK query delete");            
+                                if (err) {
+                                    console.log(err);
+                                } else {
+                                       console.log("harusnya ke user");
+                                         // res.redirect('/gates');
+                                        res.send(rows);       
+                                }
                         });
                                     
                             }
@@ -327,7 +340,9 @@ exports.addHakAkses= (req,res)=>{
         if (err) {
                 console.log(err);
         }
-        res.redirect('/');
+        // res.redirect('/');
+        res.send("Berhasil");
+        // res.send(result);
     });
 
     };
@@ -358,17 +373,14 @@ exports.getHakAkses= (req,res)=>{
                         }  
                     }
                 }
-                console.log(row);                        
-                console.log(row2);
-                res.render('HakAkses.tl',{
-                    message: req.flash('signupMessage'),
-                    rows: row,
-                    rows2 : row2
-                 });
-
-                
+                // console.log(row);                        
+                // console.log(row2);
+                res.send("Berhasil");
+                // res.render('HakAkses.tl',{
+                //     message: req.flash('signupMessage'),
+                //     rows: row,
+                //     rows2 : row2
+                //  });
             });
-
- 
         });
     };
