@@ -65,6 +65,11 @@ module.exports = function(app,passport) {
 	app.post('/hakakses', controller.addHakAkses);
 	app.get('/hakakses', controller.getHakAkses);
 
+	//role
+
+	// app.post('/role', controller.addRole);
+	app.get('/role', controller.getRole);
+
 	return route;
 
 };

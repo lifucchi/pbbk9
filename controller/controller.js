@@ -388,3 +388,50 @@ exports.getHakAkses= (req,res)=>{
             });
         });
     };
+
+    // exports.addRole= (req,res)=>{
+    // var GR_ROLE = req.body.GR_ROLE;
+    // // var gate = req.body.gate;
+    // console.log("masuk");
+
+    // // var addQuery = "SELECT * FROM `grup`";
+
+    // // let query = "INSERT INTO `hak_akses` (GR_ID, G_ID) VALUES (? , ?)";
+    // console.log(role);
+    // console.log(gate);
+    // var insertQuery = "INSERT INTO `grup` (GR_ID) VALUES ('" + GR_ROLE + "')";
+    
+    // connection.query(insertQuery, (err, result) => {
+    // console.log("masuk query");
+    //     if (err) {
+    //             console.log(err);
+    //     }
+    //     else{
+    //         res.send("berhasil");
+
+    //     }
+
+    // });
+
+    // };
+
+exports.getRole= (req,res)=>{
+        var row = [] ;
+        var row2 = [] ;
+
+         connection.query('select * from grup', function (err, rows) {
+            if (err) {
+                console.log(err);
+            } else {
+                if (rows.length) {
+                    for (var i = 0, len = rows.length; i < len; i++) {  //query den gelen bütün parametreleri rows sınıfına ekliyoruz .
+                        row2[i] = rows[i];
+                     
+                    }  
+                }
+            }
+            res.send(rows);
+
+        });
+
+    };
