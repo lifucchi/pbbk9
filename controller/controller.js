@@ -354,39 +354,49 @@ exports.addHakAkses= (req,res)=>{
 exports.getHakAkses= (req,res)=>{
         var row = [] ;
         var row2 = [] ;
-
-        connection.query('select * from gate', function (err, rows) {
+        var insertQuery = "SELECT `hak_akses`.`G_ID`, `gate`.`G_GATENAME`, `grup`.`GR_ROLE` FROM `hak_akses` INNER JOIN `grup` ON (`hak_akses`.`GR_ID` = `grup`.`GR_ID`) INNER JOIN `gate` ON (`hak_akses`.`G_ID` = `gate`.`G_ID`) ORDER BY `hak_akses`.`G_ID` ASC;"
+        connection.query(insertQuery, (err, result) => {
+            console.log("masuk query");
             if (err) {
-                console.log(err);
-            } else {
-                if (rows.length) {
-                    for (var i = 0, len = rows.length; i < len; i++) {  //query den gelen bütün parametreleri rows sınıfına ekliyoruz .
-                        row[i] = rows[i];
-
-                    }  
-                }
-            }
-             connection.query('select * from grup', function (err, rows) {
-                if (err) {
                     console.log(err);
-                } else {
-                    if (rows.length) {
-                        for (var i = 0, len = rows.length; i < len; i++) {  //query den gelen bütün parametreleri rows sınıfına ekliyoruz .
-                            row2[i] = rows[i];
-                         
-                        }  
-                    }
-                }
-                // console.log(row);                        
-                // console.log(row2);
-                res.send("Berhasil");
-                // res.render('HakAkses.tl',{
-                //     message: req.flash('signupMessage'),
-                //     rows: row,
-                //     rows2 : row2
-                //  });
-            });
+            }
+            // res.redirect('/');
+            res.send(result);
+            // res.send(result);
         });
+
+        // connection.query('select * from gate', function (err, rows) {
+        //     if (err) {
+        //         console.log(err);
+        //     } else {
+        //         if (rows.length) {
+        //             for (var i = 0, len = rows.length; i < len; i++) {  //query den gelen bütün parametreleri rows sınıfına ekliyoruz .
+        //                 row[i] = rows[i];
+
+        //             }  
+        //         }
+        //     }
+        //      connection.query('select * from grup', function (err, rows) {
+        //         if (err) {
+        //             console.log(err);
+        //         } else {
+        //             if (rows.length) {
+        //                 for (var i = 0, len = rows.length; i < len; i++) {  //query den gelen bütün parametreleri rows sınıfına ekliyoruz .
+        //                     row2[i] = rows[i];
+                         
+        //                 }  
+        //             }
+        //         }
+        //         // console.log(row);                        
+        //         // console.log(row2);
+        //         // res.send("Berhasil");
+        //         // res.render('HakAkses.tl',{
+        //         //     message: req.flash('signupMessage'),
+        //         //     rows: row,
+        //         //     rows2 : row2
+        //         //  });
+        //     });
+        // });
     };
 
     // exports.addRole= (req,res)=>{

@@ -33,11 +33,6 @@ module.exports = function(app,passport) {
 	app.delete('/users/:id', controller.getDelUser);
 // auth-login
 
-	// app.post('/login', passport.authenticate('local-login', {
- //            successRedirect: '/users/:id',
- //            failureRedirect: '/login',
- //            failureFlash : true 
-	// }));
 	// sudah
 	app.post('/login', function(req, res, next){
 		var id =  req.body.id;

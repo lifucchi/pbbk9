@@ -13,6 +13,9 @@ var passport = require('passport');
 var flash    = require('connect-flash');
 const tl = require('express-tl');
 
+const cors = require("cors");
+app.use(cors());
+
 const methodOverride = require('method-override');
 app.use(methodOverride('_method'));
 
