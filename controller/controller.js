@@ -324,7 +324,7 @@ exports.getHakAkses= (req,res)=>{
     var row2 = [] ;
     var role = req.params.role;
     
-    connection.query("SELECT `hak_akses`.`G_ID`, `gate`.`G_GATENAME`, `grup`.`GR_ROLE` FROM `hak_akses` INNER JOIN `grup` ON (`hak_akses`.`GR_ID` = `grup`.`GR_ID`) INNER JOIN `gate` ON (`hak_akses`.`G_ID` = `gate`.`G_ID`) WHERE `grup`.`GR_ID` = ?",[role], function (err, rows){
+    connection.query("SELECT * FROM `hak_akses` INNER JOIN `grup` ON (`hak_akses`.`GR_ID` = `grup`.`GR_ID`) INNER JOIN `gate` ON (`hak_akses`.`G_ID` = `gate`.`G_ID`) WHERE `grup`.`GR_ID` = ?",[role], function (err, rows){
         console.log("masuk");
         if (err){
             console.log(err);
