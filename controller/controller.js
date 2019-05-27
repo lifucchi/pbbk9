@@ -317,7 +317,7 @@ exports.addHakAkses= (req,res)=>{
         // res.send(result);
     });
 
-    };
+};
 
 exports.getHakAkses= (req,res)=>{
     var row  = [] ;
@@ -362,4 +362,24 @@ exports.getRole= (req,res)=>{
             }
             res.send(rows);
         });
+    };
+
+exports.addRole= (req,res)=>{
+    var id = req.body.id;
+    var role = req.body.role;
+
+    console.log("masuk");
+
+    var insertQuery = "INSERT INTO grup (GR_ID, GR_ROLE) VALUES ('" + id + "' , '" + role + "')";
+    
+    connection.query(insertQuery, (err, result) => {
+    console.log("masuk query");
+        if (err) {
+                console.log(err);
+        }
+        // res.redirect('/');
+        res.send("Berhasil");
+        // res.send(result);
+    });
+
     };

@@ -62,7 +62,7 @@ module.exports = function(app,passport) {
 
 	//role
 
-	// app.post('/role', controller.addRole);
+	app.post('/role', controller.addRole);
 	app.get('/role', controller.getRole);
 
 	return route;
