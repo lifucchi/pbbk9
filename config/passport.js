@@ -75,7 +75,7 @@ module.exports = function(passport) {
         },
        function(req, id, password, done) { 
             var insertQuery = "INSERT INTO log ( id, G_ID , L_TIME, L_STATUS ) values (?,?,?,?)";
-            var insertQuery2 = "SELECT * FROM users u , hak_akses ha , gate ga , grup g WHERE u.ID = ? and ga.G_ID = ? and g.GR_ID = u.GR_ID  and ha.GR_ID = g.GR_ID and ga.G_ID = ha.G_ID and ga.G_OPEN <= CAST(? as time) and ga.G_CLOSE > CAST(? as time)";
+            var insertQuery2 = "SELECT * FROM users u , hak_akses ha , gate ga , grup g WHERE u.ID = ? and ga.G_ID = ? and g.GR_ID = u.GR_ID  and ha.GR_ID = g.GR_ID and ga.G_ID = ha.G_ID and ha.G_OPEN <= CAST(? as time) and ha.G_CLOSE > CAST(? as time)";
             // var insertQuery2 = "SELECT * FROM users WHERE ID = ?"
             var id = req.body.id;
             var gate = req.body.role;  

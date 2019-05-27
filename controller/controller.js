@@ -127,20 +127,17 @@ exports.getLogin= (req,res)=>{
 exports.addGates= (req, res) => {
 //    let message = '';
     let G_GATENAME = req.body.G_GATENAME;
-    let G_OPEN = req.body.G_OPEN;
-    let G_CLOSE = req.body.G_CLOSE;
+    // let G_OPEN = req.body.G_OPEN;
+    // let G_CLOSE = req.body.G_CLOSE;
     // console.log(G_ROLE);
-
     let addQuery = "SELECT * FROM `gate` WHERE G_GATENAME = '" + G_GATENAME + "'";
-
     connection.query(addQuery, (err, result) => {
         if (err) {
-            return res.status(500).send(err);
+                res.send("sudah ada gate");
         }
 
         else {
-            let query = "INSERT INTO `gate` (G_GATENAME, G_OPEN, G_CLOSE) VALUES ('" +
-                G_GATENAME + "', '" + G_OPEN + "', '" + G_CLOSE + "')";
+            let query = "INSERT INTO `gate` (G_GATENAME) VALUES ('" + G_GATENAME + "')";
             connection.query(query, (err, result) => {
                 if (err) {
                     // res.send("Berhasil");
@@ -184,11 +181,6 @@ exports.getGates= (req,res)=>{
 };
 
 exports.getIdUser= (req,res)=>{
-      // req.params.id = req.user.ID;
-      // console.log(req.params.id);
-      // res.status(200).send(req.params.id);
-      // const id = parseInt(req.params.id, 10);
-      // console.log(id);
        var row = [];
         var row2=[];
         var id = req.params.id;
@@ -198,21 +190,8 @@ exports.getIdUser= (req,res)=>{
             if (err) {
                 console.log(err);
             } else {
-                // if (rows.length) {
-                //     for (var i = 0, len = rows.length; i < len; i++) {  //query den gelen bütün parametreleri rows sınıfına ekliyoruz .
-                //         row[i] = rows[i];
-                        
-                //     }  
-                // }
-                // console.log(row);
             res.send(rows);
             }
-            // res.render('profile', {
-            //         rows: row
-            //     });
-            // res.json(req.user.ID); 
-            // res.render('index.tl', {rows : row});
-            // req.send(req.params); 
 
         });
 
@@ -244,11 +223,6 @@ exports.getIdUser= (req,res)=>{
     };
 
     exports.getIdGate= (req,res)=>{
-      // req.params.id = req.user.ID;
-      // console.log(req.params.id);
-      // res.status(200).send(req.params.id);
-      // const id = parseInt(req.params.id, 10);
-      // console.log(id);
        var row = [];
         var row2=[];
         var g_id = req.params.g_id;
@@ -268,13 +242,6 @@ exports.getIdUser= (req,res)=>{
                 res.send(rows);
 
             }
-            // res.render('gate', {
-            //         rows: row
-            //     });
-            // res.json(req.user.ID); 
-            // res.render('index.tl', {rows : row});
-            // req.send(req.params); 
-
         });
     };
 
@@ -330,14 +297,15 @@ exports.getIdUser= (req,res)=>{
 exports.addHakAkses= (req,res)=>{
     var role = req.body.role;
     var gate = req.body.gate;
+    let G_OPEN = req.body.G_OPEN;
+    let G_CLOSE = req.body.G_CLOSE;
     console.log("masuk");
 
-    var addQuery = "SELECT * FROM `gate` WHERE G_ID = '" + gate + "'";
-
-    // let query = "INSERT INTO `hak_akses` (GR_ID, G_ID) VALUES (? , ?)";
     console.log(role);
     console.log(gate);
-    var insertQuery = "INSERT INTO `hak_akses` (GR_ID, G_ID) VALUES ('" + role + "' , '" + gate + "')";
+    console.log(G_OPEN);
+    console.log(G_CLOSE);
+    var insertQuery = "INSERT INTO `hak_akses` (GR_ID, G_ID, G_OPEN, G_CLOSE) VALUES ('" + role + "' , '" + gate + "', '" + G_OPEN + "' , '" + G_CLOSE + "')";
     
     connection.query(insertQuery, (err, result) => {
     console.log("masuk query");
@@ -352,78 +320,26 @@ exports.addHakAkses= (req,res)=>{
     };
 
 exports.getHakAkses= (req,res)=>{
-        var row = [] ;
-        var row2 = [] ;
-        var insertQuery = "SELECT `hak_akses`.`G_ID`, `gate`.`G_GATENAME`, `grup`.`GR_ROLE` FROM `hak_akses` INNER JOIN `grup` ON (`hak_akses`.`GR_ID` = `grup`.`GR_ID`) INNER JOIN `gate` ON (`hak_akses`.`G_ID` = `gate`.`G_ID`) ORDER BY `hak_akses`.`G_ID` ASC;"
-        connection.query(insertQuery, (err, result) => {
-            console.log("masuk query");
-            if (err) {
-                    console.log(err);
-            }
-            // res.redirect('/');
-            res.send(result);
-            // res.send(result);
-        });
-
-        // connection.query('select * from gate', function (err, rows) {
-        //     if (err) {
-        //         console.log(err);
-        //     } else {
-        //         if (rows.length) {
-        //             for (var i = 0, len = rows.length; i < len; i++) {  //query den gelen bütün parametreleri rows sınıfına ekliyoruz .
-        //                 row[i] = rows[i];
-
-        //             }  
-        //         }
-        //     }
-        //      connection.query('select * from grup', function (err, rows) {
-        //         if (err) {
-        //             console.log(err);
-        //         } else {
-        //             if (rows.length) {
-        //                 for (var i = 0, len = rows.length; i < len; i++) {  //query den gelen bütün parametreleri rows sınıfına ekliyoruz .
-        //                     row2[i] = rows[i];
-                         
-        //                 }  
-        //             }
-        //         }
-        //         // console.log(row);                        
-        //         // console.log(row2);
-        //         // res.send("Berhasil");
-        //         // res.render('HakAkses.tl',{
-        //         //     message: req.flash('signupMessage'),
-        //         //     rows: row,
-        //         //     rows2 : row2
-        //         //  });
-        //     });
-        // });
-    };
-
-    // exports.addRole= (req,res)=>{
-    // var GR_ROLE = req.body.GR_ROLE;
-    // // var gate = req.body.gate;
-    // console.log("masuk");
-
-    // // var addQuery = "SELECT * FROM `grup`";
-
-    // // let query = "INSERT INTO `hak_akses` (GR_ID, G_ID) VALUES (? , ?)";
-    // console.log(role);
-    // console.log(gate);
-    // var insertQuery = "INSERT INTO `grup` (GR_ID) VALUES ('" + GR_ROLE + "')";
+    var row  = [] ;
+    var row2 = [] ;
+    var role = req.params.role;
     
-    // connection.query(insertQuery, (err, result) => {
-    // console.log("masuk query");
-    //     if (err) {
-    //             console.log(err);
-    //     }
-    //     else{
-    //         res.send("berhasil");
+    connection.query('SELECT `hak_akses`.`G_ID`, `gate`.`G_GATENAME`, `grup`.`GR_ROLE` FROM `hak_akses` INNER JOIN `grup` ON (`hak_akses`.`GR_ID` = `grup`.`GR_ID`) INNER JOIN `servernine4`.`gate` ON (`hak_akses`.`G_ID` = `gate`.`G_ID`) WHERE `grup`.`GR_ID` = ?',[role], function (err, rows){
+        if (err){
+            console.log(err);
+        }else{
+            if (rows.length){
+                // for (var i = 0, len = rows.length; i < len; i++){  //query den gelen bütün parametreleri rows sınıfına ekliyoruz .
+                //     row[i] = rows[i];
+                // } 
+                res.send(rows); 
+            }{
+                res.send("data kosong");                 
+            }
 
-    //     }
-
-    // });
-
-    // };
+        }
+    });
+}
 
 exports.getRole= (req,res)=>{
         var row = [] ;
@@ -441,7 +357,5 @@ exports.getRole= (req,res)=>{
                 }
             }
             res.send(rows);
-
         });
-
     };

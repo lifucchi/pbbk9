@@ -31,6 +31,7 @@ module.exports = function(app,passport) {
 	app.get('/users/:id', controller.getIdUser);
 	// Delete user sudah
 	app.delete('/users/:id', controller.getDelUser);
+
 // auth-login
 
 	// sudah
@@ -46,7 +47,6 @@ module.exports = function(app,passport) {
 
 	// belum	
 	app.get('/login', controller.getLogin);	
-	// app.get('/logout', controller.getLogout);		
 
 // Gate sudah
 	app.post('/gates', controller.addGates);
@@ -54,11 +54,11 @@ module.exports = function(app,passport) {
 	app.get('/gates/:g_id', controller.getIdGate);
 	app.delete('/gates/:g_id', controller.getDelGate);
 
-	// app.get('/logout', controller.getLogout);
 
 
 	app.post('/hakakses', controller.addHakAkses);
-	app.get('/hakakses', controller.getHakAkses);
+	app.get('/hakakses/:role', controller.getHakAkses);
+	// app.get('/hakakses', controller.getHakAkses);
 
 	//role
 
