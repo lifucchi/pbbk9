@@ -324,17 +324,21 @@ exports.getHakAkses= (req,res)=>{
     var row2 = [] ;
     var role = req.params.role;
     
-    connection.query('SELECT `hak_akses`.`G_ID`, `gate`.`G_GATENAME`, `grup`.`GR_ROLE` FROM `hak_akses` INNER JOIN `grup` ON (`hak_akses`.`GR_ID` = `grup`.`GR_ID`) INNER JOIN `servernine4`.`gate` ON (`hak_akses`.`G_ID` = `gate`.`G_ID`) WHERE `grup`.`GR_ID` = ?',[role], function (err, rows){
+    connection.query("SELECT `hak_akses`.`G_ID`, `gate`.`G_GATENAME`, `grup`.`GR_ROLE` FROM `hak_akses` INNER JOIN `grup` ON (`hak_akses`.`GR_ID` = `grup`.`GR_ID`) INNER JOIN `gate` ON (`hak_akses`.`G_ID` = `gate`.`G_ID`) WHERE `grup`.`GR_ID` = ?",[role], function (err, rows){
+        console.log("masuk");
         if (err){
             console.log(err);
         }else{
             if (rows.length){
-                // for (var i = 0, len = rows.length; i < len; i++){  //query den gelen bütün parametreleri rows sınıfına ekliyoruz .
-                //     row[i] = rows[i];
-                // } 
-                res.send(rows); 
-            }{
-                res.send("data kosong");                 
+                console.log("masuk");
+                    for (var i = 0, len = rows.length; i < len; i++) {  //query den gelen bütün parametreleri rows sınıfına ekliyoruz .
+                        row2[i] = rows[i];
+                    }
+                console.log(row2);
+                res.send(row2); 
+            }
+            {
+                // res.send("data kosong");                 
             }
 
         }
